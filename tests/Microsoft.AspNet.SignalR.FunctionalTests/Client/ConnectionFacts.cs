@@ -73,5 +73,22 @@ namespace Microsoft.AspNet.SignalR.Tests
                 connection.Stop();
             }
         }
+
+        [Theory]
+        [InlineData(HostType.IISExpress, TransportType.LongPolling)]
+        [InlineData(HostType.IISExpress, TransportType.ServerSentEvents)]
+        [InlineData(HostType.IISExpress, TransportType.Websockets)]
+        public void ClientCertificatesAddedCorrectly(HostType hostType, TransportType transportType)
+        {
+            using (var host = CreateHost(hostType, transportType))
+            {
+                // Arrange
+                var mre = new ManualResetEventSlim(false);
+                host.Initialize();
+                var connection = CreateConnection(host, "/examine-request");
+
+                //connection.Received += (arg) =>
+            }
+        }
     }
 }

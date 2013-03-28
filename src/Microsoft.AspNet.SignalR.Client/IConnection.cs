@@ -12,6 +12,10 @@ using Microsoft.AspNet.SignalR.Client.Transports;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+#if !NETFX_CORE
+using System.Security.Cryptography.X509Certificates;
+#endif
+
 namespace Microsoft.AspNet.SignalR.Client
 {
     public interface IConnection
@@ -33,6 +37,9 @@ namespace Microsoft.AspNet.SignalR.Client
         ICredentials Credentials { get; set; }
         CookieContainer CookieContainer { get; set; }
         JsonSerializer JsonSerializer { get; }
+#if !NETFX_CORE
+        ICollection<X509Certificate> ClientCertificates { get; }
+#endif
 
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Stop", Justification = "Works in VB.NET.")]
         void Stop();
